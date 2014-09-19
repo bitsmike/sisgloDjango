@@ -14,5 +14,10 @@ class Cenpob(models.Model):
 	YGD = models.CharField(max_length=20)
 	cod_dist = models.ForeignKey(Distrito)
 
+	#personalizamos el titulo de lo que se quiere mostrar
+	def Distrito_Cenpob (self):
+		return self.cod_dist.name_distrito
+	Distrito_Cenpob.admin_order_field = 'cod_dist__name_distrito'
+
 	def __unicode__(self):
 		return self.name_cenpob

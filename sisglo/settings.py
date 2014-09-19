@@ -26,11 +26,12 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-ADMIN_TITLE = 'SISGLO - SISTEMA GLOBAL HUMANITARIA PERU'
-
 # Application definition
 
+GRAPPELLI_ADMIN_TITLE = 'SISGLOH - SISTEMA GLOBAL HUMANITARIA PERU'
+
 INSTALLED_APPS = (
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,14 +39,15 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mockups',
-    # 'ubigeocps',
-    # 'photos',
-    # 'persons',
-    # 'students',
+    'import_export',
     'cenpobs',
     'distritos',
     'provincias',
     'departamentos',
+    # 'ubigeocps',
+    # 'photos',
+    # 'persons',
+    # 'students',
     # 'courses',
     # 'schools',
 )
@@ -58,6 +60,22 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+    "django.core.context_processors.request",
+)
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
 )
 
 ROOT_URLCONF = 'sisglo.urls'
