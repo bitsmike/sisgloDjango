@@ -1,6 +1,7 @@
 from django.contrib import admin
 from cenpobs.models import Cenpob
 from distritos.models import Distrito
+from provincias.models import Provincia
 from actions import export_as_excel
 
 # class DistritoInline(admin.StackedInline):
@@ -9,6 +10,7 @@ from actions import export_as_excel
 class CenpobAdmin(admin.ModelAdmin):
 	#list_display = ('ubigeo','departamento','provincia','distrito','cenpob')
 	list_display = ('cod_cenpob','name_cenpob','CP_con_IE','nivel_ie','fuente_g','msnm','XGD','YGD','Distrito_Cenpob',)
+	#list_display_links = ('Distrito_Cenpob', )
 	list_filter = ('cod_dist','nivel_ie', )
 	search_fields = ('cod_cenpob', 'name_cenpob', )
 	action = (export_as_excel, )
