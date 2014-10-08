@@ -29,6 +29,10 @@ class Distrito(models.Model):
 	def __unicode__(self):
 		return self.name_distrito
 
+	class Admin:
+		pass
+
+
 class Centro_poblado(models.Model):
 	codigo_cenpob = models.CharField(max_length=6, primary_key=True)
 	nombre_cenpob = models.CharField(max_length=100)
@@ -46,9 +50,20 @@ class Centro_poblado(models.Model):
 	dep_prov_dis_cp = models.CharField(max_length=200)
 
 	# personalizamos el titulo de lo que se quiere mostrar
-	# def Distrito_Cenpob (self):
-	# 	return self.cod_dist.name_distrito
-	# Distrito_Cenpob.admin_order_field = 'cod_dist__name_distrito'
+	def _Distrito (self):
+		return self.distrito.name_distrito
+	_Distrito.admin_order_field = 'distrito__name_distrito'
+
+	def _Provincia (self):
+		return self.provincia.name_provincia
+	_Provincia.admin_order_field = 'provincia__name_provincia'
+
+	def _Departamento (self):
+		return self.departamento.name_departamento
+	_Departamento.admin_order_field = 'departamento__name_departamento'
 
 	def __unicode__(self):
-		return self.name_cenpob
+		return self.nombre_cenpob
+
+	class Admin:
+		pass
