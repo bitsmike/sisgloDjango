@@ -41,17 +41,7 @@ INSTALLED_APPS = (
     'mockups',
     'import_export',
     'centros_poblados',
-    # 'cenpobs',
-    # 'distritos',
-    # 'provincias',
     # 'municipios',
-    # 'departamentos',
-    # 'cen_pobs',
-    # 'photos',
-    # 'persons',
-    # 'students',
-    # 'courses',
-    # 'schools',
 )
 
 MIDDLEWARE_CLASSES = (
