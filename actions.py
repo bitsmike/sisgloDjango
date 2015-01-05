@@ -13,12 +13,11 @@ from django.template import Context, Template
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
-
 def export_as_excel(modeladmin, request, queryset):
     if not request.user.is_staff:
         raise PermissionDenied
     opts = modeladmin.model._meta
-    response = HttpResponse(mimetype='text/csv; charset=utf-8')
+    response = HttpResponse(content_type='text/csv; charset=utf-8')
     response['Content-Disposition'] = 'attachment; filename=%s.xls' % unicode(opts).replace('.', '_')
     try:
         field_names = modeladmin.model.get_csv_fields()
@@ -57,5 +56,4 @@ def export_as_excel(modeladmin, request, queryset):
         data.append(acc)
     response.write(data.xls)
     return response
-
 export_as_excel.short_description = "Exportar como Excel"

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 Django settings for sisglo project.
 
@@ -31,7 +33,7 @@ ALLOWED_HOSTS = []
 GRAPPELLI_ADMIN_TITLE = 'SISGLOH - SISTEMA GLOBAL HUMANITARIA PERU'
 
 INSTALLED_APPS = (
-    'grappelli',
+    # 'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +43,7 @@ INSTALLED_APPS = (
     'mockups',
     'import_export',
     'centros_poblados',
-    # 'municipios',
+    'escuelas',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -80,8 +82,14 @@ WSGI_APPLICATION = 'sisglo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'db_sisglo',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': '127.0.0.1',
+        'PORT': '',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
