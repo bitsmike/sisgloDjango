@@ -1,44 +1,116 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from escuelas.models import Escuela
+from centros_poblados.models import Centro_poblado
+from datetime import datetime
+from django.shortcuts import render_to_response
+import MySQLdb
+ 
+# db = MySQLdb.connect(user='root', db='db_sisglo', passwd='', host='127.0.0.1')
+# cursor = db.cursor()
+# cursor.execute('SELECT * FROM generals_general ORDER BY codigo_inicial')
+# names = [row[0] for row in cursor.fetchall()]
+# db.close()
+# return render_to_response('book_list.html', {'names': names})
+
+
+SEXO = (
+	('M','MASCULINO'),
+	('F','FEMENINO')
+)
+
+GRADO = (
+	('INICIAL 3','INICIAL 3'),
+	('INICIAL 4','INICIAL 4'),
+	('INICIAL 5','INICIAL 5'),
+	('1°','1°'),
+	('2°','2°'),
+	('3°','3°'),
+	('4°','4°'),
+	('5°','5°'),
+	('6°','6°'),
+	('7°','7°'),
+	('8°','8°'),
+	('9°','9°'),
+	('10°','10°'),
+	('11°','11°'),
+	('12°','12°'),
+	('13°','13°'),
+	('14°','14°'),
+)
+
+TURNO = (
+	('M','M'),
+	('T','T')
+)
+
+ESTADO = (
+	('ACTIVO','ACTIVO'),
+	('INACTIVO','INACTIVO')
+)
+
+MOTIVO = (
+	('INUBICADO','INUBICADO'),
+	('RETIRADO','RETIRADO'),
+	('FALLECIDO','FALLECIDO'),
+	('DUPLICADO','DUPLICADO')
+)
+
+MUNICIPIO = (
+	('LAMPA','LAMPA'),
+	('PUNO','PUNO'),
+	('PUTINA','PUTINA'),
+	('LIMA','LIMA')
+)
+
+APADRINAMIENTO = (
+	('APADRINADO','APADRINADO'),
+	('NO APADRINADO','NO APADRINADO')
+)
 
 # Año de la diversificacion productiva y del fortalecimiento de la educacion
+
 # Create your models here.
 class General(models.Model):
-	codigo_padrino = models.CharField(max_length=8)
-	nombre_padrino = models.CharField(max_length=100)
-	apellidos_padrino = models.CharField(max_length=100)
-	sede_padrino = models.CharField(max_length=20)
-	
-	situacion = models.CharField(max_length=8, choices=SITUACION)
-	ruta = models.CharField(max_length=8, choices=RUTA)
-	numero = models.CharField(max_length=5, blank=True)
-	prenombre = models.CharField(max_length=160, choices=PRENOMBRE)
-	nombre = models.CharField(max_length=200)
-	escuela_ghp = models.CharField(max_length=160, choices=SINO)
-	nivel = models.CharField(max_length=100, choices=NIVEL)
-	codigo_ghp = models.CharField(max_length=5)
+	today = datetime.now()
+	coordinacion = 'LA'
+	year = today.year
+	month = today.month
+	codigo_inicial=coordinacion + today.strftime("%y") + today.strftime("%m")
+
+	codigo_inicial = models.CharField(max_length=10, blank=True, default=codigo_inicial)
+	codigo_de_menor = models.CharField(max_length=8, blank=True)
+	nombres = models.CharField(max_length=100)
+	apellidos = models.CharField(max_length=100)
+	sexo = models.CharField(max_length=10, choices=SEXO)
+	escuela = models.ForeignKey(Escuela, blank=True)
+	escuela_anterior = models.CharField(max_length=50, blank=True)
+	grado = models.CharField(max_length=20, choices=GRADO)
+	seccion = models.CharField(max_length=20)
+	turno = models.CharField(max_length=1, choices=TURNO, default='M')
+	estado = models.CharField(max_length=10, choices=ESTADO, default='ACTIVO')
+	motivo_estado = models.CharField(max_length=10, choices=MOTIVO, blank=True)
+	notas = models.TextField(max_length=200, blank=True)
+	salud = models.CharField(max_length=200, blank=True)
+	duplicado = models.CharField(max_length=50, blank=True)
 	direccion = models.CharField(max_length=200)
-	poblacion = models.CharField(max_length=50)
-	distrito = models.CharField(max_length=50)
-	provincia = models.CharField(max_length=50)
-	departamento = models.CharField(max_length=50)
-	ugel = models.CharField(max_length=100, blank=True)
-	fecha_de_registro = models.DateField()
-	msnm = models.PositiveSmallIntegerField()
-	director = models.CharField(max_length=200, blank=True)
-	dni = models.CharField(max_length=8, blank=True)
-	usuario_siagie = models.CharField(max_length=50, blank=True)
-	password_siagie = models.CharField(max_length=50, blank=True)
-	celular = models.CharField(max_length=200, blank=True)
-	nro_computadoras = models.PositiveSmallIntegerField(blank=True)
-	nro_laptops = models.PositiveSmallIntegerField(blank=True)
-	con_qaliwarma = models.CharField(max_length=200, blank=True, choices=SINO)
-	quintil_de_probreza = models.CharField(max_length=15, choices=QUINTIL)
-	num_docentes = models.PositiveSmallIntegerField(blank=True)
-	num_secciones = models.PositiveSmallIntegerField(blank=True)
+	barrio = models.CharField(max_length=100)
+	poblacion = models.ForeignKey(Centro_poblado)
+	municipio = models.CharField(max_length=50, choices=MUNICIPIO, default='LAMPA')
+	padre = models.CharField(max_length=50)
+	madre = models.CharField(max_length=50)
+	celular = models.CharField(max_length=50, blank=True)
+	dni = models.PositiveIntegerField(blank=True)
+	numero_hermanos = models.PositiveSmallIntegerField()
+	apadrinamiento = models.CharField(max_length=20, choices=APADRINAMIENTO, default='NO APADRINADO')
+	padrino_codigo = models.CharField(max_length=8, blank=True)
+	padrino_nombres = models.CharField(max_length=100, blank=True)
+	padrino_apellidos = models.CharField(max_length=100, blank=True)
+	padrino_sede = models.CharField(max_length=20, blank=True)
+	observaciones = models.CharField(max_length=100, blank=True)
 
 	def __unicode__(self):
-		return self.codmod
+		return self.codigo_inicial
 
 	class Admin:
 		pass

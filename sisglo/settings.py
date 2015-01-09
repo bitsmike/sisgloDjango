@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 GRAPPELLI_ADMIN_TITLE = 'SISGLOH - SISTEMA GLOBAL HUMANITARIA PERU'
 
 INSTALLED_APPS = (
-    # 'grappelli',
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'import_export',
     'centros_poblados',
     'escuelas',
+    'generals',
 )
 
 MIDDLEWARE_CLASSES = (
